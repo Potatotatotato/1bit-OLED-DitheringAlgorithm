@@ -1,4 +1,6 @@
 # 适用于单色LED屏幕灰度图像显示的抖动算法
+* Visual studio
+* Keil
 * 5级灰度
 * STM32F407
 * 串口DMA、双缓冲
