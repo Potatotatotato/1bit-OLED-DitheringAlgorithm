@@ -85,5 +85,11 @@ void USART1_DMA_Init(u32 DMA_Memory0BaseAddr, u32 DMA_Memory1BaseAddr)
 ## PC图像预处理
 #### 需要安装配置的库
 1. opencv
-2. Windows Screenshot [来源](https://www.cnblogs.com/zhiyiYo/p/14800601.html)
-3. 
+2. Windows Screenshot [原作者](https://www.cnblogs.com/zhiyiYo/p/14800601.html)
+3. c++串口通信 [原作者Repository： LairdXavier/MyTool](https://github.com/LairdXavier/MyTool/tree/master/serial_win_cplus)
+#### 实现功能
+1. 截取视频图像并进行图像处理
+2. 截取屏幕图像并进行图像处理
+3. 获取摄像头图像并进行图像处理
+4. 将图像流保存至`ditheringVideo.bin`，该文件可以使用串口助手直接发送至单片机
+
