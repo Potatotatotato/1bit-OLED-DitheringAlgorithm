@@ -15,7 +15,7 @@
 		bool getVideoFrame(VideoCapture& videoCap, Mat& img);
 		bool getCameraFrame(VideoCapture& cameraCap, Mat& img);
 		bool getScreenFrame(Screenshot& screenshot, Mat& img);
-然后将这一帧图像大小修改为屏幕大小（128*64），取灰度
+然后将这一帧图像大小修改为屏幕大小（128_64），取灰度
 		resize(img, img, Size(128, 64));
 		cvtColor(img, img, COLOR_BGR2GRAY);
 再将这一帧图像处理为1bit的：
