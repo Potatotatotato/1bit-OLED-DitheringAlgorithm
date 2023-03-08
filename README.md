@@ -2,9 +2,9 @@
 * 5级灰度
 * STM32F407
 * 串口DMA、双缓冲
-<div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/BadApple_raw.jpg" width=400>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/BadApple_1bit.jpg" width=250></div>
-<div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/Cxk_raw.jpg" width=460>&nbsp;&nbsp;&nbsp;<img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/Cxk_1bit.jpg" width=250></div>
-<div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/G.E.M_raw.jpg" width=460>&nbsp;&nbsp;&nbsp;<img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/G.E.M_1bit.jpg" width=250></div>
+<div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/BadApple_raw.jpg" width=400>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/BadApple_1bit.jpg" width=250></div>
+<div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/Cxk_raw.jpg" width=463>&nbsp;&nbsp;&nbsp;<img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/Cxk_1bit.jpg" width=250></div>
+<div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/G.E.M_raw.jpg" width=463>&nbsp;&nbsp;&nbsp;<img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/G.E.M_1bit.jpg" width=250></div>
 
 ## 抖动算法原理
 [CSDN](https://blog.csdn.net/qq_42676511/article/details/120626723)图案法是指灰度可以用一定比例的黑白点组成的区域表示，从而达到整体图像的灰度感。简单来说，就是使用黑白点组成图案来表示像素的灰度。本文基于[另一位up主的视频](https://www.bilibili.com/video/BV1vg411n7LD/?spm_id_from=333.1007.top_right_bar_window_history.content.click)实现了5级灰度图像的绘制。
