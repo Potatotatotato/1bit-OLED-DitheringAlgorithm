@@ -12,13 +12,13 @@
 <div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DitheringAlgotithm.jpg" width=800></div>
 
 先获取一帧图像：<br>
-		bool getVideoFrame(VideoCapture& videoCap, Mat& img);
-		bool getCameraFrame(VideoCapture& cameraCap, Mat& img);
-		bool getScreenFrame(Screenshot& screenshot, Mat& img);
+		bool getVideoFrame(VideoCapture& videoCap, Mat& img);<br>
+		bool getCameraFrame(VideoCapture& cameraCap, Mat& img);<br>
+		bool getScreenFrame(Screenshot& screenshot, Mat& img);<br>
 然后将这一帧图像大小修改为屏幕大小（128_64），取灰度：<br>
-		resize(img, img, Size(128, 64));
-		cvtColor(img, img, COLOR_BGR2GRAY);
-再将这一帧图像处理为1bit的：
+		resize(img, img, Size(128, 64));<br>
+		cvtColor(img, img, COLOR_BGR2GRAY);<br>
+再将这一帧图像处理为1bit的：<br>
 ```c
 for (uint32_t row = 0; row < 64; row += 2)
 {
