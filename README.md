@@ -26,10 +26,10 @@ cvtColor(img, img, COLOR_BGR2GRAY);
 ```c
 for (uint32_t row = 0; row < 64; row += 2)
 {
-		for (uint32_t column = 0; column < 128; column += 2)
-		{
+	for (uint32_t column = 0; column < 128; column += 2)
+	{
 		ditheringImg(img, row, column);
-		}
+	}
 }
 ```
 ```c
