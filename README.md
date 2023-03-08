@@ -10,6 +10,23 @@
 [CSDN](https://blog.csdn.net/qq_42676511/article/details/120626723)图案法是指灰度可以用一定比例的黑白点组成的区域表示，从而达到整体图像的灰度感。简单来说，就是使用黑白点组成图案来表示像素的灰度。本文基于[另一位up主的视频](https://www.bilibili.com/video/BV1vg411n7LD/?spm_id_from=333.1007.top_right_bar_window_history.content.click)实现了5级灰度图像的绘制。
 <div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DitheringAlgotithm.jpg" width=800></div>
 
+先获取一帧图像：
+		bool getVideoFrame(VideoCapture& videoCap, Mat& img);
+		bool getCameraFrame(VideoCapture& cameraCap, Mat& img);
+		bool getScreenFrame(Screenshot& screenshot, Mat& img);
+然后将这一帧图像大小修改为屏幕大小（128*64），取灰度
+		resize(img, img, Size(128, 64));
+		cvtColor(img, img, COLOR_BGR2GRAY);
+再将这一帧图像处理为1bit的：
+```c
+for (uint32_t row = 0; row < 64; row += 2)
+{
+		for (uint32_t column = 0; column < 128; column += 2)
+		{
+		ditheringImg(img, row, column);
+		}
+}
+```
 ```c
 void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 {
