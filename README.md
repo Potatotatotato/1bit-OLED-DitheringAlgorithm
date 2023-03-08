@@ -11,14 +11,14 @@
 [CSDN](https://blog.csdn.net/qq_42676511/article/details/120626723)图案法是指灰度可以用一定比例的黑白点组成的区域表示，从而达到整体图像的灰度感。简单来说，就是使用黑白点组成图案来表示像素的灰度。本文基于[另一位up主的视频](https://www.bilibili.com/video/BV1vg411n7LD/?spm_id_from=333.1007.top_right_bar_window_history.content.click)实现了5级灰度图像的绘制。
 <div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DitheringAlgotithm.jpg" width=800></div>
 
-先获取一帧图像：<br>
-		1. bool getVideoFrame(VideoCapture& videoCap, Mat& img);<br>
-		2. bool getCameraFrame(VideoCapture& cameraCap, Mat& img);<br>
-		3. bool getScreenFrame(Screenshot& screenshot, Mat& img);<br>
-然后将这一帧图像大小修改为屏幕大小（128_64），取灰度：<br>
-		1. resize(img, img, Size(128, 64));<br>
-		2. cvtColor(img, img, COLOR_BGR2GRAY);<br>
-再将这一帧图像处理为`二值`的：<br>
+先获取一帧图像：\<br>
+		1. bool getVideoFrame(VideoCapture& videoCap, Mat& img);
+		2. bool getCameraFrame(VideoCapture& cameraCap, Mat& img);
+		3. bool getScreenFrame(Screenshot& screenshot, Mat& img);
+然后将这一帧图像大小修改为屏幕大小（128_64），取灰度：\<br>
+		1. resize(img, img, Size(128, 64));
+		2. cvtColor(img, img, COLOR_BGR2GRAY);
+再将这一帧图像处理为`二值`的：\<br>
 ```c
 for (uint32_t row = 0; row < 64; row += 2)
 {
