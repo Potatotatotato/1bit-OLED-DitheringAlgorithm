@@ -92,4 +92,6 @@ void USART1_DMA_Init(u32 DMA_Memory0BaseAddr, u32 DMA_Memory1BaseAddr)
 2. 截取屏幕图像并进行图像处理
 3. 获取摄像头图像并进行图像处理
 4. 将图像流保存至`ditheringVideo.bin`，该文件可以使用串口助手直接发送至单片机
+<div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/SerialSoftware.jpg" width=600></div>
+
 
