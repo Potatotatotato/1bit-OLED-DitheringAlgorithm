@@ -105,6 +105,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 > 使用FIFO的最主要好处是：当寄存器数据宽度与内存数据宽度不同时`寄存器数据宽度>内存数据宽度`，避免数据丢失。FIFO可以对待传输数据进行数据封装/解封。以32位数据转移到16位数据为例，如果使用直接模式传输，那么会丢失高16位的数据，而使用FIFO就不会丢失高16位的数据，如下图所示。  
 
 <div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_ByteAlignment.jpg" width=800></div>  
+
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于STM32F4来讲，每个DMA stream都有`4 words`即`32 bytes`FIFO可用。它用来暂存来自DMA源端的数据，每当FIFO里存放的数据达到设定的阈值后，数据就会被移走。阈值可以设置为从1个字到4个字的深度。  
 
 		DMA_FIFOThreshold_1QuarterFull
