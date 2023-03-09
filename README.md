@@ -108,10 +108,10 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于STM32F4来讲，每个DMA stream都有`4 words`即`32 bytes`FIFO可用。它用来暂存来自DMA源端的数据，每当FIFO里存放的数据达到设定的阈值后，数据就会被移走。阈值可以设置为从1个字到4个字的深度。  
 
-		DMA_FIFOThreshold_1QuarterFull
-		DMA_FIFOThreshold_HalfFull
-		DMA_FIFOThreshold_3QuartersFull
-		DMA_FIFOThreshold_Full
+> DMA_FIFOThreshold_1QuarterFull
+> DMA_FIFOThreshold_HalfFull
+> DMA_FIFOThreshold_3QuartersFull
+> DMA_FIFOThreshold_Full
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;启用DMA的FIFO可以最大程度地避免数据传输过程中的溢出问题，可以减少DMA对内存的访问次数从而减少总线访问竞争，通过BURST分组传输优化传输带宽以提升芯片性能。利用FIFO,通过对源端/目标端的数据进行打包或拆包以适应不同数据宽度的访问需求.让DMA的使用更为方便灵活。  
 
@@ -208,7 +208,7 @@ void USART1_DMA_Init(u32 DMA_Memory0BaseAddr, u32 DMA_Memory1BaseAddr)
 ```
 ##### 注意事项
 1. 修改DMA的配置的时候需要先`DISABLE`DMA
-2. 与标志位有关的小坑。我的工程中设置了一个定时器，目的是在串口空闲500ms后重置DMA，防止DMA接收到不完整的数据（例如多接受了10个字节），这会导致下次接收一帧图像时，缓冲区从`buffer[10]`开始写入数据，导致显示的图像出问题。当时Debug时发现，程序莫名其妙地进中断，后来发现`TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure)`这句代码执行后，会将定时器`update flag`置1，导致立马进入TIM中断。对于DMA来说，估计也存在这样的情况，如果大家发现DMA在没有传输数据的情况下将`transfer complete flag`置1或者产生中断，那么可以加一条`DMA_ClearFlag(DMAy_Streamx, DMA_FLAG_TCIFx);`试试。
+2. 与标志位有关的小坑。我的工程中设置了一个定时器，目的是在串口空闲`500ms`后重置DMA，防止DMA接收到不完整的数据（例如多接受了10个字节），这会导致下次接收一帧图像时，缓冲区从`buffer[10]`开始写入数据，导致显示的图像出问题。当时debug时发现，程序莫名其妙地进中断，后来发现`TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure)`这句代码执行后，会将定时器`update flag`置1，导致立马进入TIM中断。对于DMA来说，估计也存在这样的情况，如果大家发现DMA在没有传输数据的情况下将`transfer complete flag`置1或者产生中断，那么可以加一条`DMA_ClearFlag(DMAy_Streamx, DMA_FLAG_TCIFx);`试试。
 ##### 参考文献
 1. [STM32带FIFO的DMA传输应用示例](https://www.stmcu.org.cn/module/forum/forum.php?mod=viewthread&tid=626579&highlight=stm32%2Bdma%2Bfifo)
 2. [STM32 DMA详解](https://www.stmcu.org.cn/module/forum/forum.php?mod=viewthread&tid=626817&highlight=DMA)
