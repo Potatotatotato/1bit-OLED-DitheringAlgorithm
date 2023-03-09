@@ -36,7 +36,7 @@ int main()
 #if CREATE_VIDEO_BIN_FILE == 1
 	FILE* outputTxt;
 	String outputFilePath = "ditheringVideo.bin";
-	fopen_s(&outputTxt, outputFilePath.c_str(), "wb"); //不能用w，必须用wb
+	fopen_s(&outputTxt, outputFilePath.c_str(), "wb"); //must use "wb", because we are create a binary file.
 #endif
 
 	String videoPath = "E:\\E-DISK_User\\Videos\\OBS Output\\2023-02-06 16-44-01.mp4";
@@ -71,11 +71,11 @@ int main()
 						if (img.at<uchar>(row * 8 + i, colum))
 							imageBuffer[frameByteCounter] |= (0x01 << i);
 					}
-					frameByteCounter++;
-
+		
 					#if CREATE_VIDEO_BIN_FILE == 1
 						fputc((int)imageBuffer[frameByteCounter], outputTxt);
 					#endif
+					frameByteCounter++;
 				}
 			}
 			if(!com.send(imageBuffer, 1024))
