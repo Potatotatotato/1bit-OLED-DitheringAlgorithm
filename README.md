@@ -102,7 +102,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 ##### DMA FIFO配置
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里我先提出一个问题：我们为什么要配置FIFO？对于串口的每个DMA请求，都立刻使用DMA***直接***传输到目的地不好吗？  
 
-> 使用FIFO的最主要好处是：当寄存器数据宽度与内存数据宽度不同时`寄存器数据宽度>内存数据宽度`，避免数据丢失。FIFO可以对待传输数据进行数据封装/解封。以32位数据转移到16位数据为例，如果使用直接模式传输，那么会丢失高16位的数据，而使用FIFO就不会丢失高16位的数据，如下图所示。  
+> 使用FIFO的最主要好处是：当寄存器数据宽度与内存数据宽度不同时`寄存器数据宽度>内存数据宽度`，避免数据丢失。FIFO可以对待传输数据进行数据封装/解封。以32位数据转移到16位数据为例，如果使用直接模式传输，那么会丢失高16位的数据，而使用FIFO就不会丢失高16位的数据，如下图所示。在DMA搬运后，0x00-0x01存放低16位数据，0x02-0x03存放高16位数据。  
 
 <div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_ByteAlignment.jpg" width=800></div>  
 
@@ -127,7 +127,11 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_INC8;
 
 ##### 双缓冲区配置
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DMA的双缓冲配置还是挺简单的，配置一下缓冲区地址，使能双缓冲就OK了。  
+```c
+DMA_MemoryTargetConfig(DMA2_Stream2, DMA_Memory1BaseAddr, DMA_Memory_1);
+DMA_DoubleBufferModeCmd(DMA2_Stream2,ENABLE);
+```
 ##### Code
 ```c
 void uart_init(u32 baudrate)
