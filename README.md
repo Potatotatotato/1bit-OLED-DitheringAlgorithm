@@ -80,7 +80,13 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
 ## 串口DMA双缓冲配置
 ##### DMA FIFO配置
+对于STM32F4来讲，每个DMA stream都有4个字的FIFO可用。它用来暂存来自DMA源端的数据，每当FIFO里存放的数据达到设定的阈值后，数据就会被移走。阈值可以设置为从1个字到4个字的深度。  
+		DMA_FIFOThreshold_1QuarterFull
+		DMA_FIFOThreshold_HalfFull
+		DMA_FIFOThreshold_3QuartersFull
+		DMA_FIFOThreshold_Full
 
+启用DMA的FIFO可以最大程度地避免数据传输过程中的溢出问题，可以减少DMA对内存的访问次数从而减少总线访问竞争，通过BURST分组传输优化传输带宽以提升芯片性能。利用FIFO,通过对源端/目标端的数据进行打包或拆包以适应不同数据宽度的访问需求.让DMA的使用更为方便灵活。
 ##### 双缓冲区配置
 
 ##### Code
