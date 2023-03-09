@@ -80,7 +80,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
 ## 串口DMA双缓冲配置
 ##### DMA FIFO配置
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于STM32F4来讲，每个DMA stream都有***4 word***的FIFO可用。它用来暂存来自DMA源端的数据，每当FIFO里存放的数据达到设定的阈值后，数据就会被移走。阈值可以设置为从1个字到4个字的深度。  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于STM32F4来讲，每个DMA stream都有`4 words`即`32 bytes`FIFO可用。它用来暂存来自DMA源端的数据，每当FIFO里存放的数据达到设定的阈值后，数据就会被移走。阈值可以设置为从1个字到4个字的深度。  
 
 		DMA_FIFOThreshold_1QuarterFull
 		DMA_FIFOThreshold_HalfFull
@@ -88,7 +88,8 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 		DMA_FIFOThreshold_Full
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;启用DMA的FIFO可以最大程度地避免数据传输过程中的溢出问题，可以减少DMA对内存的访问次数从而减少总线访问竞争，通过BURST分组传输优化传输带宽以提升芯片性能。利用FIFO,通过对源端/目标端的数据进行打包或拆包以适应不同数据宽度的访问需求.让DMA的使用更为方便灵活。  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在配置FIFO的过程中
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在配置FIFO的过程中，我们还需要配置`DMA Burst`传输或称`DMA节拍`传输。即几个数据`1/4/8/16`被封装成1组，或称1个Burst,或称1节。在一节内逐个进行数据传输，每个数据的传输相当于1拍。俨如音乐里的节拍，3/4拍代表以四分音符为一拍，每小节3拍。对于每1节内的数据传输，DMA对总线的占用不会被总线矩阵仲裁器解除或打断，以保证每节数据的可靠完成。根据数据手册*STM32F4xx中文参考手册.pdf*，每拍Burst传输的数据大小通常等于外设` FIFO 大小的一半`。
+
 ##### 双缓冲区配置
 
 ##### Code
@@ -165,7 +166,10 @@ void USART1_DMA_Init(u32 DMA_Memory0BaseAddr, u32 DMA_Memory1BaseAddr)
 
 }
 ```
-
+##### 参考文献
+1. [STM32带FIFO的DMA传输应用示例](https://www.stmcu.org.cn/module/forum/forum.php?mod=viewthread&tid=626579&highlight=stm32%2Bdma%2Bfifo)
+2. [STM32 DMA详解](https://www.stmcu.org.cn/module/forum/forum.php?mod=viewthread&tid=626817&highlight=DMA)
+<br>
 ## PC图像预处理
 ##### 需要安装配置的库
 1. opencv
