@@ -87,6 +87,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
     DMA_InitStructure.DMA_BufferSize = 1024;	//counter
     DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;//Circular Mode
+    DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USART1->DR寄存器接收到的数据宽度为`1 Byte`，所以配置寄存器数据宽度为1字节，并且禁止外设地址的自增；开辟两个`uint8_t buffer[1024]`的双缓冲区，配置内存数据宽度为1字节，并允许内存地址的自增。 
 
@@ -102,7 +103,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 ##### DMA FIFO配置
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里我先提出一个问题：我们为什么要配置FIFO？对于串口的每个DMA请求，都立刻使用DMA ***直接*** 传输到目的地不好吗？  
 
-> 使用FIFO的最主要好处是：当寄存器数据宽度与内存数据宽度不同时`寄存器数据宽度>内存数据宽度`，避免数据丢失。FIFO可以对待传输数据进行数据封装/解封。以`32位数据转移到16位数据`为例，如果使用直接模式传输，那么会丢失高16位的数据，而使用FIFO就不会丢失高16位的数据，如下图所示。在DMA搬运后，0x00-0x01存放低16位数据，0x02-0x03存放高16位数据。  
+> 使用FIFO的最主要好处是：假设DMA运输方向为寄存器至内存，当`寄存器数据宽度>内存数据宽度`时，如果使用直接模式传输，会发生高位数据丢失的现象。FIFO可以对待传输数据进行数据封装/解封，以`32位数据转移到16位数据`为例，直接模式传输会丢失高16位的数据，而使用FIFO就不会丢失高16位的数据，如下图所示。在DMA搬运后，0x00-0x01存放低16位数据，0x02-0x03存放高16位数据。  
 
 <div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_ByteAlignment.jpg" width=800></div>  
 
