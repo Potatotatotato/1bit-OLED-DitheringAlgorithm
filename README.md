@@ -83,17 +83,21 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
 ## 串口DMA双缓冲配置
 ##### DMA 基础配置
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单色OLED分辨率为`128*64`，那么一帧图像占用的数据量为`128*64/8=1024Bytes`。  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单色OLED分辨率为`128*64`，那么一帧图像占用的数据量为`128*64/8=1024Bytes`。我们需要连续接收，所以配置DMA为连续模式（DMA双缓冲区也要求工作在连续模式）。  
+
+    DMA_InitStructure.DMA_BufferSize = 1024;	//counter
+    DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;//Circular Mode
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USART1->DR寄存器接收到的数据宽度为`1 Byte`，所以配置寄存器数据宽度为1字节，并且禁止外设地址的自增；开辟两个`uint8_t buffer[1024]`的双缓冲区，配置内存数据宽度为1字节，并允许内存地址的自增。 
 
     DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&USART1->DR;
     DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;//Peripheral pointer no increase
     DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;	//Peripheral size: Byte
+    
     DMA_InitStructure.DMA_Memory0BaseAddr = DMA_Memory0BaseAddr;
     DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;//Memory pointer increase
     DMA_InitStructure.DMA_MemoryDataSize = DMA_PeripheralDataSize_Byte;	//Memory size: Byte  
-    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每帧图像
 
 ##### DMA FIFO配置
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于STM32F4来讲，每个DMA stream都有`4 words`即`32 bytes`FIFO可用。它用来暂存来自DMA源端的数据，每当FIFO里存放的数据达到设定的阈值后，数据就会被移走。阈值可以设置为从1个字到4个字的深度。  
