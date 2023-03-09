@@ -83,7 +83,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
 ## 串口DMA双缓冲配置
 ##### DMA 基础配置
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单色OLED分辨率为`128*64`，那么一帧图像占用的数据量为`128*64/8=1024Bytes`。我们需要连续接收，所以配置DMA为连续模式（DMA双缓冲区也要求工作在连续模式）。  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单色OLED分辨率为`128*64`，那么一帧图像占用的数据量为`128*64/8=1024Bytes`。我们需要循环接收，所以配置DMA为循环模式（DMA双缓冲区也要求工作在循环模式）。  
 
     DMA_InitStructure.DMA_BufferSize = 1024;	//counter
     DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;//Circular Mode
