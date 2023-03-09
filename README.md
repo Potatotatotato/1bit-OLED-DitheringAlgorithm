@@ -100,7 +100,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
 
 ##### DMA FIFO配置
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里我先提出一个问题：我们为什么要配置FIFO？对于串口的每个DMA请求，都立刻使用DMA***直接***传输到目的地不好吗？  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这里我先提出一个问题：我们为什么要配置FIFO？对于串口的每个DMA请求，都立刻使用DMA ***直接*** 传输到目的地不好吗？  
 
 > 使用FIFO的最主要好处是：当寄存器数据宽度与内存数据宽度不同时`寄存器数据宽度>内存数据宽度`，避免数据丢失。FIFO可以对待传输数据进行数据封装/解封。以32位数据转移到16位数据为例，如果使用直接模式传输，那么会丢失高16位的数据，而使用FIFO就不会丢失高16位的数据，如下图所示。在DMA搬运后，0x00-0x01存放低16位数据，0x02-0x03存放高16位数据。  
 
@@ -206,6 +206,9 @@ void USART1_DMA_Init(u32 DMA_Memory0BaseAddr, u32 DMA_Memory1BaseAddr)
 
 }
 ```
+##### 注意事项
+1. 修改DMA的配置的时候需要先`DISABLE`DMA
+2. 与标志位有关的小坑。我的工程中设置了一个定时器，目的是在串口空闲500ms后重置DMA，防止DMA接收到不完整的数据（例如多接受了10个字节），这会导致下次接收一帧图像时，缓冲区从`buffer[10]`开始写入数据，导致显示的图像出问题。当时Debug时发现，程序莫名其妙地进中断，后来发现`TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure)`这句代码执行后，会将定时器`update flag`置1，导致立马进入TIM中断。对于DMA来说，估计也存在这样的情况，如果大家发现DMA在没有传输数据的情况下将`transfer complete flag`置1或者产生中断，那么可以加一条`DMA_ClearFlag(DMAy_Streamx, DMA_FLAG_TCIFx);`试试。
 ##### 参考文献
 1. [STM32带FIFO的DMA传输应用示例](https://www.stmcu.org.cn/module/forum/forum.php?mod=viewthread&tid=626579&highlight=stm32%2Bdma%2Bfifo)
 2. [STM32 DMA详解](https://www.stmcu.org.cn/module/forum/forum.php?mod=viewthread&tid=626817&highlight=DMA)
