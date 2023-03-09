@@ -97,7 +97,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
     DMA_InitStructure.DMA_Memory0BaseAddr = DMA_Memory0BaseAddr;
     DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;//Memory pointer increase
     DMA_InitStructure.DMA_MemoryDataSize = DMA_PeripheralDataSize_Byte;	//Memory size: Byte  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;每帧图像
+
 
 ##### DMA FIFO配置
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于STM32F4来讲，每个DMA stream都有`4 words`即`32 bytes`FIFO可用。它用来暂存来自DMA源端的数据，每当FIFO里存放的数据达到设定的阈值后，数据就会被移走。阈值可以设置为从1个字到4个字的深度。  
@@ -112,7 +112,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 <div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_BurstSize.jpg" width=500>  <img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_BurstInc_FIFO.jpg" width=500></div>  
 <br>
 
-我们这里配置FIFO大小为`DMA_FIFOThreshold_Full`，由于内存缓冲区数据宽度为1 Byte，所以我们配置内存缓冲区每小节8拍。  
+我们这里配置FIFO大小为`DMA_FIFOThreshold_Full`，上面我们将内存缓冲区数据宽度配置为1 Byte，这里配置内存缓冲区每小节8拍。所以每拍Burst传输的数据为2 Bytes，正好等于FIFO的一半。  
 
 	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Enable; //FIFO enable  
 	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;//Full FIFO 
