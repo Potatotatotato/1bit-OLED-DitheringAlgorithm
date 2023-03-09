@@ -109,7 +109,13 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;启用DMA的FIFO可以最大程度地避免数据传输过程中的溢出问题，可以减少DMA对内存的访问次数从而减少总线访问竞争，通过BURST分组传输优化传输带宽以提升芯片性能。利用FIFO,通过对源端/目标端的数据进行打包或拆包以适应不同数据宽度的访问需求.让DMA的使用更为方便灵活。  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在配置FIFO的过程中，我们还需要配置`DMA Burst`传输或称`DMA节拍`传输。即几个数据`1/4/8/16`被封装成1组，或称1个Burst,或称1节。在一节内逐个进行数据传输，每个数据的传输相当于1拍。俨如音乐里的节拍，3/4拍代表以四分音符为一拍，每小节3拍。对于每1节内的数据传输，DMA对总线的占用不会被总线矩阵仲裁器解除或打断，以保证每节数据的可靠完成。根据数据手册*STM32F4xx中文参考手册.pdf*，每拍Burst传输的数据大小通常等于外设` FIFO 大小的一半`。
-<div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_BurstSize.jpg" width=800></div>
+<div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_BurstSize.jpg" width=700></div>  
+我们这里配置FIFO大小为`DMA_FIFOThreshold_Full`，由于内存缓冲区数据宽度为1 Byte，所以我们配置内存缓冲区每小节8拍。  
+
+	DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Enable; //FIFO enable  
+	DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;//Full FIFO 
+	DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+	DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_INC8;
 
 ##### 双缓冲区配置
 
