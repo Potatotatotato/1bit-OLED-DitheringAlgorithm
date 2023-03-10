@@ -109,7 +109,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
 <div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_ByteAlignment.jpg" width=800></div>  
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于STM32F4来讲，每个DMA stream都有`4 words`即`32 bytes`FIFO可用。它用来暂存来自DMA源端的数据，每当FIFO里存放的数据达到设定的阈值后，数据就会被移走。阈值可以设置为从1个字到4个字的深度。  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对于STM32F4来讲，每个DMA stream都有`4 words`即`16 bytes`FIFO可用。它用来暂存来自DMA源端的数据，每当FIFO里存放的数据达到设定的阈值后，数据就会被移走。阈值可以设置为从1个字到4个字的深度。  
 
 > DMA_FIFOThreshold_1QuarterFull  
 > DMA_FIFOThreshold_HalfFull  
