@@ -216,6 +216,7 @@ void USART1_DMA_Init(u32 DMA_Memory0BaseAddr, u32 DMA_Memory1BaseAddr)
 ##### 参考文献
 1. [STM32 DMA详解](https://www.stmcu.org.cn/module/forum/forum.php?mod=viewthread&tid=626817&highlight=DMA)
 2. [STM32带FIFO的DMA传输应用示例](https://www.stmcu.org.cn/module/forum/forum.php?mod=viewthread&tid=626579&highlight=stm32%2Bdma%2Bfifo)
+3. [强烈推荐这个入门视频](https://www.bilibili.com/video/BV1th411z7sn?p=23&vd_source=e6cfc8577ccc9621465b12d49ef2c1c3)
 <br>
 
 ## PC图像预处理
