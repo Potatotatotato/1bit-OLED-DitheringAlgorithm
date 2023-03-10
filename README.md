@@ -91,7 +91,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
     DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;//Circular Mode
     DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USART1->DR寄存器接收到的数据宽度为`1 Byte`，所以配置寄存器数据宽度为1字节，并且禁止外设地址的自增；开辟两个`uint8_t buffer[1024]`的双缓冲区，配置内存数据宽度为1字节，并允许内存地址的自增。 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USART1->DR寄存器接收到的数据宽度为`1 Byte`，所以配置外设数据宽度为1字节，并且禁止外设地址的自增；开辟两个`uint8_t buffer[1024]`的双缓冲区，配置内存数据宽度为1字节，并允许内存地址的自增。 
 
     DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&USART1->DR;
     DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;//Peripheral pointer no increase
