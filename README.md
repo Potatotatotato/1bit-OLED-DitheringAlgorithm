@@ -140,10 +140,8 @@ DMA_DoubleBufferModeCmd(DMA2_Stream2,ENABLE);
 ```c
 uint8_t bufferNum = 0;
 bufferNum = DMA_GetCurrentMemoryTarget(DMA_Stream_TypeDef* DMAy_Streamx);  //Returns the current memory target used by double buffer transfer.
-
 bufferNum = DMAy_Streamx->CR & DMA_SxCR_CT);
 ```
-
 
 ##### Code
 ```c
