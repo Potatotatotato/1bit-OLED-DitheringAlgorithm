@@ -136,7 +136,7 @@ DMA_MemoryTargetConfig(DMA2_Stream2, DMA_Memory1BaseAddr, DMA_Memory_1);
 DMA_DoubleBufferModeCmd(DMA2_Stream2,ENABLE);
 ```
 ##### 获取正在写入数据的缓冲区编号
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在绘制OLED图像时，我们需要知道哪个缓冲区是DMA正在写入数据的，我们称之为“工作缓冲区”。我们不能够将工作缓冲区中的数据发送给OLED屏幕，因为工作缓冲区中的数据不是一个完整的帧。我们应该把另外一个缓冲区(空闲缓冲区）中的数据发送给OLED，空闲缓冲区中保存了完整的一帧。ST给我们提供了函数获取工作缓冲区，不过我们也可以直接操作寄存器。若返回值为0，那么说明Buffer0正在被写入数据，我们应该发送Buffer1的数据。  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在绘制OLED图像时，我们需要知道哪个缓冲区是DMA正在写入数据的，我们称之为`工作缓冲区`。我们不能够将工作缓冲区中的数据发送给OLED屏幕，因为工作缓冲区中的数据不是一个完整的帧。我们应该把另外一个`空闲缓冲区`中的数据发送给OLED，空闲缓冲区中保存了完整的一帧。ST给我们提供了函数获取工作缓冲区，不过我们也可以直接操作寄存器。若返回值为0，那么说明Buffer0正在被写入数据，我们应该发送Buffer1的数据。  
 ```c
 uint8_t bufferNum = 0;
 bufferNum = DMA_GetCurrentMemoryTarget(DMA_Stream_TypeDef* DMAy_Streamx);  //Returns the current memory target used by double buffer transfer.
