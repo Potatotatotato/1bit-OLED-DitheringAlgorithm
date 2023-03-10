@@ -118,7 +118,7 @@ void ditheringImg(Mat& img, uint32_t row, uint32_t column)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;启用DMA的FIFO可以最大程度地避免数据传输过程中的溢出问题，可以减少DMA对内存的访问次数从而减少总线访问竞争，通过BURST分组传输优化传输带宽以提升芯片性能。利用FIFO,通过对源端/目标端的数据进行打包或拆包以适应不同数据宽度的访问需求.让DMA的使用更为方便灵活。  
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在配置FIFO的过程中，我们还需要配置`DMA Burst`传输或称`DMA节拍`传输。即几个数据`1/4/8/16`被封装成1组，或称1个Burst,或称1节。在一节内逐个进行数据传输，每个数据的传输相当于1拍。俨如音乐里的节拍，3/4拍代表以四分音符为一拍，每小节3拍。对于每1节内的数据传输，DMA对总线的占用不会被总线矩阵仲裁器解除或打断，以保证每节数据的可靠完成。根据数据手册*STM32F4xx中文参考手册.pdf*，每拍Burst传输的数据大小通常等于外设` FIFO 大小的一半`。
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在配置FIFO的过程中，我们还需要配置`DMA Burst`传输或称`DMA节拍`传输。即几个数据`4/8/16`被封装成1组，或称1个Burst,或称1节。在一节内逐个进行数据传输，每个数据的传输相当于1拍。俨如音乐里的节拍，3/4拍代表以四分音符为一拍，每小节3拍。对于每1节内的数据传输，DMA对总线的占用不会被总线矩阵仲裁器解除或打断，以保证每节数据的可靠完成。根据数据手册*STM32F4xx中文参考手册.pdf*，每拍Burst传输的数据大小通常等于外设` FIFO 大小的一半`。
 <div align="center"><img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_BurstSize.jpg" width=430>  <img src="https://github.com/Potatotatotato/1bit-OLED-DitheringAlgorithm/blob/main/Images/DMA_BurstInc_FIFO.jpg" width=430></div>  
 <br>
 
@@ -212,7 +212,7 @@ void USART1_DMA_Init(u32 DMA_Memory0BaseAddr, u32 DMA_Memory1BaseAddr)
 ##### 注意事项
 1. 修改DMA的配置的时候需要先`DISABLE`DMA
 2. 只有启用了循环模式，才能使用双缓冲模式
-3. 无论是源端还是目标端，只有地址指针被允许自增，相应的Burst传输才被允许使用
+3. 无论是源端还是目标端，只有地址指针被允许自增，相应的Burst传输才被允许使用，否则BurstInc数值固定为`DMA_PeripheralBurst_Single`
 4. 与标志位有关的小坑。我的工程中设置了一个定时器，目的是在串口空闲`500ms`后重置DMA，防止DMA接收到不完整的数据（例如多接受了10个字节），这会导致下次接收一帧图像时，缓冲区从`buffer[10]`开始写入数据，导致显示的图像出问题。当时debug时发现，程序莫名其妙地进中断，后来发现`TIM_TimeBaseInit(TIM3,&TIM_TimeBaseInitStructure)`这句代码执行后，会将定时器`update flag`置1，导致立马进入TIM中断。对于DMA来说，估计也存在这样的情况，如果大家发现DMA在没有传输数据的情况下将`transfer complete flag`置1或者产生中断，那么可以加一条`DMA_ClearFlag(DMAy_Streamx, DMA_FLAG_TCIFx)`试试
 ##### 参考文献
 1. [STM32 DMA详解](https://www.stmcu.org.cn/module/forum/forum.php?mod=viewthread&tid=626817&highlight=DMA)
