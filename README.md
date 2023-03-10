@@ -1,4 +1,4 @@
-# 适用于单色OLED屏幕图像显示的抖动算法 + 串口接收 DMA FIFO 双缓冲区配置 
+# 串口接收 DMA FIFO 双缓冲区配置 + 适用于单色OLED屏幕图像显示的抖动算法 
 * Visual studio c++
 * STM32F407
 * 0.96寸单色IIC通信OLED
